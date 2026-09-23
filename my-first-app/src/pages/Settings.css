@@ -1,0 +1,408 @@
+/* ==========================================================================
+   ShopEasy - User Settings & Profile Panel CSS
+   ========================================================================== */
+
+.settings-page {
+    min-height: 85vh;
+    padding: 40px 6%;
+    background-color: #f8fafc;
+    box-sizing: border-box;
+}
+
+.settings-container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* ---------- Header Profile Card ---------- */
+.settings-header {
+    background: linear-gradient(135deg, #4338ca, #6366f1);
+    color: white;
+    border-radius: 16px;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 10px 25px rgba(67, 56, 202, 0.2);
+    margin-bottom: 30px;
+}
+
+.header-user-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.user-avatar-circle {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    border: 3px solid rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    font-weight: 700;
+    color: white;
+    text-transform: uppercase;
+}
+
+.header-user-info h2 {
+    margin: 0 0 5px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.header-user-info p {
+    margin: 0;
+    font-size: 14px;
+    color: #e0e7ff;
+}
+
+.header-logout-btn {
+    padding: 10px 20px;
+    background: rgba(239, 68, 68, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.header-logout-btn:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+/* ---------- Layout Grid (Tabs + Content) ---------- */
+.settings-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 30px;
+    align-items: start;
+}
+
+/* ---------- Navigation Sidebar ---------- */
+.settings-sidebar {
+    background: white;
+    border-radius: 14px;
+    padding: 12px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.sidebar-tab {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 14px 18px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    color: #475569;
+    font-size: 15px;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.sidebar-tab .tab-icon {
+    font-size: 18px;
+}
+
+.sidebar-tab:hover {
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+.sidebar-tab.active {
+    background: #eef2ff;
+    color: #4338ca;
+    font-weight: 600;
+}
+
+.sidebar-tab.logout-tab {
+    color: #ef4444;
+    margin-top: 10px;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 16px;
+}
+
+.sidebar-tab.logout-tab:hover {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+/* ---------- Main Content Panel ---------- */
+.settings-content-card {
+    background: white;
+    border-radius: 14px;
+    padding: 35px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+.content-header {
+    margin-bottom: 25px;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 16px;
+}
+
+.content-header h3 {
+    margin: 0 0 6px;
+    font-size: 20px;
+    color: #1e293b;
+}
+
+.content-header p {
+    margin: 0;
+    font-size: 14px;
+    color: #64748b;
+}
+
+/* ---------- Forms & Inputs ---------- */
+.settings-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.settings-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.settings-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.settings-group input,
+.settings-group textarea {
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 15px;
+    color: #1e293b;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+}
+
+.settings-group input:focus,
+.settings-group textarea:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.settings-group input:disabled {
+    background: #f8fafc;
+    color: #94a3b8;
+    cursor: not-allowed;
+}
+
+.input-hint {
+    font-size: 12px;
+    color: #94a3b8;
+    margin-top: 4px;
+}
+
+/* ---------- Save Buttons ---------- */
+.save-btn {
+    align-self: flex-start;
+    padding: 12px 28px;
+    background: #4338ca;
+    color: white;
+    font-weight: 600;
+    font-size: 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    margin-top: 10px;
+}
+
+.save-btn:hover {
+    background: #3730a3;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(67, 56, 202, 0.25);
+}
+
+.save-btn:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* ---------- Preferences Toggles ---------- */
+.pref-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.pref-item:last-child {
+    border-bottom: none;
+}
+
+.pref-info h4 {
+    margin: 0 0 4px;
+    font-size: 15px;
+    color: #1e293b;
+}
+
+.pref-info p {
+    margin: 0;
+    font-size: 13px;
+    color: #64748b;
+}
+
+/* Switch Toggle UI */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 26px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #cbd5e1;
+    transition: 0.3s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.3s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #4338ca;
+}
+
+input:checked + .slider:before {
+    transform: translateX(22px);
+}
+
+/* ---------- Status Messages ---------- */
+.settings-alert {
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.settings-alert.success {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+
+.settings-alert.error {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+/* ---------- Responsive Adjustments ---------- */
+@media (max-width: 900px) {
+    .settings-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .settings-sidebar {
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 8px;
+        gap: 8px;
+    }
+
+    .sidebar-tab {
+        white-space: nowrap;
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+
+    .sidebar-tab.logout-tab {
+        margin-top: 0;
+        border-top: none;
+        border-left: 1px solid #f1f5f9;
+        padding-top: 10px;
+    }
+}
+
+@media (max-width: 600px) {
+    .settings-page {
+        padding: 20px 12px;
+    }
+
+    .settings-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 18px;
+        padding: 22px 16px;
+    }
+
+    .header-user-info {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .header-logout-btn {
+        width: 100%;
+    }
+
+    .settings-content-card {
+        padding: 22px 16px;
+    }
+
+    .form-grid-2 {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .save-btn {
+        width: 100%;
+    }
+}
