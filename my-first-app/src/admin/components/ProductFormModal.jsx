@@ -11,8 +11,6 @@ function ProductFormModal({
     setErrors,
     onSubmit
 }) {
-    if (!showForm) return null;
-
     const fileInputRef = useRef(null);
     const [uploadedFiles, setUploadedFiles] = useState([]);
     const [uploading, setUploading] = useState(false);
@@ -21,7 +19,8 @@ function ProductFormModal({
 
     // Auto-detect variant type when category changes
     useEffect(() => {
-        if (productForm.category) {
+        if (!showForm) return;
+        if (productForm?.category) {
             const detected = detectVariantType(productForm.category);
             // Only auto-set if admin hasn't manually chosen
             if (!productForm.variant_type || productForm.variant_type === "none") {
@@ -32,7 +31,9 @@ function ProductFormModal({
                 }));
             }
         }
-    }, [productForm.category]);
+    }, [showForm, productForm?.category]);
+
+    if (!showForm) return null;
 
     const handleFieldChange = (field, value) => {
         const fieldError = validateProductField(field, value);

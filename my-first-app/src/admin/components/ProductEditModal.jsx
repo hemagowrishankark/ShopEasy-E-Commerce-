@@ -9,15 +9,15 @@ function ProductEditModal({
     setErrors,
     onSaveEdit
 }) {
-    if (!editingProduct) return null;
-
-    const safeStr = (val) => String(val ?? "");
-    const safeNum = (val) => (val !== null && val !== undefined ? val : "");
-
     const fileInputRef = useRef(null);
     const [uploadingEdit, setUploadingEdit] = useState(false);
     const [uploadEditError, setUploadEditError] = useState("");
     const [customVariantInput, setCustomVariantInput] = useState("");
+
+    if (!editingProduct) return null;
+
+    const safeStr = (val) => String(val ?? "");
+    const safeNum = (val) => (val !== null && val !== undefined ? val : "");
 
     const handleFieldChange = (field, value) => {
         const fieldError = validateProductField(field, value);

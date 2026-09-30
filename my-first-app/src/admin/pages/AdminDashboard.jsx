@@ -523,8 +523,7 @@ function AdminDashboard(props) {
 
                 const id = editingProduct.allProductId || editingProduct.id;
 
-                const res = await fetch
-                (`http://localhost:5001/api/allproducts/${id}`, {
+                const res = await fetch(`http://localhost:5001/api/allproducts/${id}`, {
                     method: "PUT",
                     headers: headers,
                     body: JSON.stringify(payload)
@@ -1448,7 +1447,7 @@ const handleCancelOrder = async (orderId) => {
                                     <button 
                                         type="button"
                                         className="view-cat-products-btn"
-                                        onClick={(e) => {
+                                        onClick={() => {
                                             if (selectedCategory === null && showCategoryProducts) {
                                                 setShowCategoryProducts(false);
                                             } else {
@@ -1524,7 +1523,7 @@ const handleCancelOrder = async (orderId) => {
                                             <button 
                                                 type="button"
                                                 className="view-cat-products-btn"
-                                                onClick={(e) => {
+                                                onClick={() => {
                                                     if (isCardActive) {
                                                         setShowCategoryProducts(false);
                                                     } else {
@@ -1577,9 +1576,9 @@ const handleCancelOrder = async (orderId) => {
                                             ✕ Close
                                         </button>
                                         <button 
-                                        type="button"
+                                            type="button"
                                             className="quick-add-cat-btn"
-                                            onClick={() => setShowCategoryForm(selectedCategory)}
+                                            onClick={() => openAddProductWithCategory(selectedCategory)}
                                         >
                                             + Add Product {selectedCategory ? `to ${selectedCategory}` : ""}
                                         </button>
