@@ -161,6 +161,7 @@ function Products () {
                             price={product.price}
                             image={`http://localhost:5001/assets/${product.image}`}
                             stock={product.stock}
+                            slug={product.slug}
                             onAddToCart={handleAddToCart}
                             />
                     ))}

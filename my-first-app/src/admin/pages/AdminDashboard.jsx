@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import { useOutletContext } from "react-router-dom";
 import ProductFormModal from "../components/ProductFormModal";
 import ProductEditModal from "../components/ProductEditModal";
-import { validateProductForm } from "../utils/productValidation";
+import { validateProductForm, EMPTY_PRODUCT_FORM } from "../utils/productValidation";
 import "../styles/admin.css";
 
 function AdminDashboard(props) {
@@ -26,14 +26,7 @@ function AdminDashboard(props) {
     const [showCategoryProducts, setShowCategoryProducts] = useState(false);
     const [categorySearchQuery, setCategorySearchQuery] = useState("");
 
-    const [productForm, setProductForm] = useState({
-        name: "",
-        price: "",
-        category: "",
-        image: "",
-        stock:"",
-        targetType: "allproducts"
-    });
+    const [productForm, setProductForm] = useState(EMPTY_PRODUCT_FORM);
 
     const [errors,setErrors] = useState({});
     const [editErrors, setEditErrors] = useState({});
@@ -386,7 +379,12 @@ function AdminDashboard(props) {
                 image: productForm.image.trim(),
                 stock: parseInt(productForm.stock),
                 targetType: productForm.targetType,
-                isBoth: productForm.targetType === "both"
+                isBoth: productForm.targetType === "both",
+                description: productForm.description?.trim() || null,
+                sizes: productForm.sizes || null,
+                images: productForm.images || null,
+                meta_title: productForm.meta_title?.trim() || null,
+                meta_description: productForm.meta_description?.trim() || null
             };
 
             const headers = getAuthHeaders();
@@ -458,14 +456,7 @@ function AdminDashboard(props) {
                 );
 }
 
-            setProductForm({
-                name: "",
-                price: "",
-                category: "",
-                image: "",
-                stock:"",
-                targetType: "allproducts"
-            });
+            setProductForm(EMPTY_PRODUCT_FORM);
             setShowForm(false);
             fetchAllProducts();
             fetchNewArrivals();
@@ -514,7 +505,12 @@ function AdminDashboard(props) {
                 price: parseFloat(editingProduct.price),
                 category: editingProduct.category.trim(),
                 image: editingProduct.image.trim(),
-                stock:parseInt(editingProduct.stock)
+                stock: parseInt(editingProduct.stock),
+                description: editingProduct.description?.trim() || null,
+                sizes: editingProduct.sizes || null,
+                images: editingProduct.images || null,
+                meta_title: editingProduct.meta_title?.trim() || null,
+                meta_description: editingProduct.meta_description?.trim() || null
             };
 
 
@@ -703,12 +699,8 @@ const handleCancelOrder = async (orderId) => {
 
     const openAddProductWithCategory = (catName) => {
         setProductForm({
-            name: "",
-            price: "",
-            category: catName || "",
-            image: "",
-            stock: "",
-            targetType: "allproducts"
+            ...EMPTY_PRODUCT_FORM,
+            category: catName || ""
         });
         setErrors({});
         setShowForm(true);

@@ -23,8 +23,10 @@ const {
     getallproducts,
     createProducts,
     updateProducts,
-    deleteProduct
-} = require("../Controllers/allProductsController");
+    deleteProduct,
+    getProductBySlug,
+    getProductById
+} = require("../Controllers/allproductsController");
 
 const {
     handleAddToCart,
@@ -69,6 +71,10 @@ router.get("/newarrivals", getproducts);
 router.get("/categories", getcategories);
 router.get("/category-count", getCategoryCount);
 router.get("/allproducts", getallproducts);
+
+// Product detail routes (public)
+router.get("/product/id/:id", getProductById);
+router.get("/product/:slug", getProductBySlug);
 
 
 //post routes validate function

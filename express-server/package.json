@@ -19,6 +19,7 @@
     "express": "^5.2.1",
     "joi": "^18.2.5",
     "jsonwebtoken": "^9.0.3",
+    "multer": "^2.4.0",
     "mysql2": "^3.23.3"
   },
   "allowScripts": {

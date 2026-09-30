@@ -50,16 +50,19 @@ const productSchema=Joi.object({
         "number.min":"Stock cannot be negative",
         "any.required":"Stock is required"
     }),
-    product_code: Joi.string()
-    .allow(null, "")
-    .optional(),
-    targetType: Joi.string()
-    .valid("allproducts", "newarrivals", "both")
-    .optional(),
-    isBoth: Joi.boolean()
-    .optional(),
-    is_new_arrival: Joi.boolean()
-    .optional()
+    product_code: Joi.string().allow(null, "").optional(),
+    targetType: Joi.string().valid("allproducts", "newarrivals", "both").optional(),
+    isBoth: Joi.boolean().optional(),
+    is_new_arrival: Joi.boolean().optional(),
+    description: Joi.string().max(2000).allow(null, "").optional(),
+    sizes: Joi.string().max(100).allow(null, "").optional(),
+    images: Joi.alternatives().try(
+        Joi.string().max(500),
+        Joi.array().items(Joi.string())
+    ).allow(null, "").optional(),
+    slug: Joi.string().max(100).allow(null, "").optional(),
+    meta_title: Joi.string().max(70).allow(null, "").optional(),
+    meta_description: Joi.string().max(160).allow(null, "").optional()
     })
     .unknown(true);
 
@@ -82,16 +85,19 @@ const productSchema=Joi.object({
     .trim()
     .required(),
 
-    image:Joi.string()
-    .max(50)
-    .trim()
-    .required(),
+    image:Joi.string().max(50).trim().required(),
 
-    stock:Joi.number()
-    .integer()
-    .min(0)
-    .required()
+    stock:Joi.number().integer().min(0).required(),
 
+    description: Joi.string().max(2000).allow(null, "").optional(),
+    sizes: Joi.string().max(100).allow(null, "").optional(),
+    images: Joi.alternatives().try(
+        Joi.string().max(500),
+        Joi.array().items(Joi.string())
+    ).allow(null, "").optional(),
+    slug: Joi.string().max(100).allow(null, "").optional(),
+    meta_title: Joi.string().max(70).allow(null, "").optional(),
+    meta_description: Joi.string().max(160).allow(null, "").optional()
     });
 
     const idSchema = Joi.object({

@@ -55,9 +55,25 @@ export function validateProductField(field, value) {
 }
 
 export function validateProductForm(product) {
-    return ["name", "price", "category", "image", "stock"].reduce((errors, field) => {
+    // Only validate required fields; description/sizes/images/seo are optional
+    return ["name", "price", "category", "image", "stock"].reduce((errs, field) => {
         const error = validateProductField(field, product[field]);
-        if (error) errors[field] = error;
-        return errors;
+        if (error) errs[field] = error;
+        return errs;
     }, {});
 }
+
+// Default empty product form state (used by AdminDashboard)
+export const EMPTY_PRODUCT_FORM = {
+    name: "",
+    price: "",
+    category: "",
+    image: "",
+    images: "",
+    stock: "",
+    description: "",
+    sizes: "",
+    meta_title: "",
+    meta_description: "",
+    targetType: "allproducts"
+};

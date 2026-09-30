@@ -34,9 +34,14 @@ const createproduct = async (req, res) => {
 
         const { 
             name, price, category,
-             image, stock, product_code, targetType, isBoth } = req.body;
+             image, stock, product_code, targetType, isBoth,
+             description, sizes, images, meta_title, meta_description } = req.body;
 
         const isBothSelected = targetType === "both" || isBoth === true || Boolean(product_code);
+        const slug = name.toLowerCase().trim().replace(/[^a-z0-9\s-]/g, "").replace(/\s+/g, "-").replace(/-+/g, "-");
+        const imagesStr = Array.isArray(images) ? images.join(",") : images || image || "";
+        const finalMetaTitle = meta_title || `${name} – ShopEasy`;
+        const finalMetaDesc = meta_description || (description ? description.substring(0, 155) : `Buy ${name} at the best price on ShopEasy.`);
 
         // duplicate check for new product add time 
         const [existingProduct] = await db.query(
@@ -74,9 +79,11 @@ const createproduct = async (req, res) => {
 
         const [result] = await db.query(
             `INSERT INTO newarrivals
-             (name, price, category, image, stock, product_code)
-             VALUES (?, ?, ?, ?, ?, ?)`,
-            [name, price, category, image, stock, product_code || null]
+             (name, price, category, image, stock, product_code, description, sizes, images, slug, meta_title, meta_description)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [name, price, category, image, stock, product_code || null,
+             description || null, sizes || null, imagesStr || null, slug,
+             finalMetaTitle, finalMetaDesc]
         );
 
         // product code recive from allproducts
@@ -125,15 +132,15 @@ const updateproduct = async (req, res) => {
         const { id } = req.params;
 
         const {
-            name,
-            price,
-            category,
-            image,
-            stock
+            name, price, category, image, stock,
+            description, sizes, images, meta_title, meta_description
         } = req.body;
 
+        const slug = name.toLowerCase().trim().replace(/[^a-z0-9\s-]/g, "").replace(/\s+/g, "-").replace(/-+/g, "-");
+        const imagesStr = Array.isArray(images) ? images.join(",") : images || image || "";
+        const finalMetaTitle = meta_title || `${name} – ShopEasy`;
+        const finalMetaDesc = meta_description || (description ? description.substring(0, 155) : `Buy ${name} at the best price on ShopEasy.`);
 
-        // 1. Fetch current product_code before update
         const [currProd] = await db.query(
             "SELECT product_code FROM newarrivals WHERE id = ?",
             [id]
@@ -141,13 +148,13 @@ const updateproduct = async (req, res) => {
 
         const [result] = await db.query(
             `UPDATE newarrivals
-             SET name = ?,
-                 price = ?,
-                 category = ?,
-                 image = ?,
-                 stock =?
+             SET name = ?, price = ?, category = ?, image = ?, stock = ?,
+                 description = ?, sizes = ?, images = ?, slug = ?,
+                 meta_title = ?, meta_description = ?
              WHERE id = ?`,
-            [name, price, category, image, stock, id]
+            [name, price, category, image, stock,
+             description || null, sizes || null, imagesStr || null, slug,
+             finalMetaTitle, finalMetaDesc, id]
         );
 
         if (result.affectedRows === 0) {
@@ -161,13 +168,13 @@ const updateproduct = async (req, res) => {
         if (prodCode) {
             await db.query(
                 `UPDATE allproducts
-                 SET name = ?,
-                     price = ?,
-                     category = ?,
-                     image = ?,
-                     stock = ?
+                 SET name = ?, price = ?, category = ?, image = ?, stock = ?,
+                     description = ?, sizes = ?, images = ?, slug = ?,
+                     meta_title = ?, meta_description = ?
                  WHERE product_code = ?`,
-                [name, price, category, image, stock, prodCode]
+                [name, price, category, image, stock,
+                 description || null, sizes || null, imagesStr || null, slug,
+                 finalMetaTitle, finalMetaDesc, prodCode]
             );
         }
 
