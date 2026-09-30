@@ -56,6 +56,7 @@ const productSchema=Joi.object({
     is_new_arrival: Joi.boolean().optional(),
     description: Joi.string().max(2000).allow(null, "").optional(),
     sizes: Joi.string().max(100).allow(null, "").optional(),
+    variant_type: Joi.string().max(50).allow(null, "").optional(),
     images: Joi.alternatives().try(
         Joi.string().max(500),
         Joi.array().items(Joi.string())
@@ -91,6 +92,7 @@ const productSchema=Joi.object({
 
     description: Joi.string().max(2000).allow(null, "").optional(),
     sizes: Joi.string().max(100).allow(null, "").optional(),
+    variant_type: Joi.string().max(50).allow(null, "").optional(),
     images: Joi.alternatives().try(
         Joi.string().max(500),
         Joi.array().items(Joi.string())
@@ -98,7 +100,8 @@ const productSchema=Joi.object({
     slug: Joi.string().max(100).allow(null, "").optional(),
     meta_title: Joi.string().max(70).allow(null, "").optional(),
     meta_description: Joi.string().max(160).allow(null, "").optional()
-    });
+    })
+    .unknown(true);
 
     const idSchema = Joi.object({
         id:Joi.number()

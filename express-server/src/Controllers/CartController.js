@@ -58,14 +58,17 @@ const db = require("../db");
             });
         }
 
+        const variant = req.body.selected_variant || req.body.variant || req.body.size || null;
+
         // Already cart-la irukka nu check pannudhu ?
         const [existingCart] = await db.query(
             `SELECT id, quantity
              FROM cart
              WHERE user_id = ? 
              AND product_id = ?
-             AND product_type = ?`,
-            [userId, productId, productType]
+             AND product_type = ?
+             AND (selected_variant = ? OR (selected_variant IS NULL AND ? IS NULL))`,
+            [userId, productId, productType, variant, variant]
         );
 
         const currentCartQty = existingCart.length > 0 ? Number(existingCart[0].quantity) : 0;
@@ -79,17 +82,15 @@ const db = require("../db");
             await db.query(
                 `UPDATE cart
                  SET quantity = quantity + ?
-                 WHERE user_id = ? 
-                 AND product_id = ?
-                 AND product_type = ?`,
-                [quantity, userId, productId, productType]
+                 WHERE id = ?`,
+                [quantity, existingCart[0].id]
             );
         } else {
             await db.query(
                 `INSERT INTO cart
-                 (user_id, product_id, product_type, quantity)
-                 VALUES (?, ?, ?, ?)`,
-                [userId, productId, productType, quantity]
+                 (user_id, product_id, product_type, quantity, selected_variant)
+                 VALUES (?, ?, ?, ?, ?)`,
+                [userId, productId, productType, quantity, variant]
             );
         }
 
@@ -122,7 +123,9 @@ const getCart = async (req, res) => {
             `SELECT
                 cart.id,
                 cart.product_id,
+                cart.product_type,
                 cart.quantity,
+                cart.selected_variant,
                 
                  CASE
                     WHEN cart.product_type = 'newarrival'
@@ -132,7 +135,7 @@ const getCart = async (req, res) => {
                     THEN allproducts.name
                 END AS name,
 
-                CASE
+                 CASE
                     WHEN cart.product_type = 'newarrival'
                     THEN newarrivals.price
 
@@ -140,7 +143,7 @@ const getCart = async (req, res) => {
                     THEN allproducts.price
                 END AS price,
 
-                CASE
+                 CASE
                     WHEN cart.product_type = 'newarrival'
                     THEN newarrivals.category
 
@@ -148,13 +151,29 @@ const getCart = async (req, res) => {
                     THEN allproducts.category
                 END AS category,
 
-                CASE
+                 CASE
+                    WHEN cart.product_type = 'newarrival'
+                    THEN newarrivals.variant_type
+
+                    WHEN cart.product_type = 'allproduct'
+                    THEN allproducts.variant_type
+                END AS variant_type,
+
+                 CASE
                     WHEN cart.product_type = 'newarrival'
                     THEN newarrivals.image
 
                     WHEN cart.product_type = 'allproduct'
                     THEN allproducts.image
-                END AS image
+                END AS image,
+
+                 CASE
+                    WHEN cart.product_type = 'newarrival'
+                    THEN newarrivals.slug
+
+                    WHEN cart.product_type = 'allproduct'
+                    THEN allproducts.slug
+                END AS slug
 
              FROM cart
 

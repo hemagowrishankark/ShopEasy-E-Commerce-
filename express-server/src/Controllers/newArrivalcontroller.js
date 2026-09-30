@@ -35,11 +35,12 @@ const createproduct = async (req, res) => {
         const { 
             name, price, category,
              image, stock, product_code, targetType, isBoth,
-             description, sizes, images, meta_title, meta_description } = req.body;
+             description, sizes, variant_type, images, meta_title, meta_description } = req.body;
 
         const isBothSelected = targetType === "both" || isBoth === true || Boolean(product_code);
         const slug = name.toLowerCase().trim().replace(/[^a-z0-9\s-]/g, "").replace(/\s+/g, "-").replace(/-+/g, "-");
         const imagesStr = Array.isArray(images) ? images.join(",") : images || image || "";
+        const finalVariantType = variant_type || "none";
         const finalMetaTitle = meta_title || `${name} – ShopEasy`;
         const finalMetaDesc = meta_description || (description ? description.substring(0, 155) : `Buy ${name} at the best price on ShopEasy.`);
 
@@ -79,10 +80,10 @@ const createproduct = async (req, res) => {
 
         const [result] = await db.query(
             `INSERT INTO newarrivals
-             (name, price, category, image, stock, product_code, description, sizes, images, slug, meta_title, meta_description)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+             (name, price, category, image, stock, product_code, description, sizes, variant_type, images, slug, meta_title, meta_description)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [name, price, category, image, stock, product_code || null,
-             description || null, sizes || null, imagesStr || null, slug,
+             description || null, sizes || null, finalVariantType, imagesStr || null, slug,
              finalMetaTitle, finalMetaDesc]
         );
 
@@ -133,11 +134,12 @@ const updateproduct = async (req, res) => {
 
         const {
             name, price, category, image, stock,
-            description, sizes, images, meta_title, meta_description
+            description, sizes, variant_type, images, meta_title, meta_description
         } = req.body;
 
         const slug = name.toLowerCase().trim().replace(/[^a-z0-9\s-]/g, "").replace(/\s+/g, "-").replace(/-+/g, "-");
         const imagesStr = Array.isArray(images) ? images.join(",") : images || image || "";
+        const finalVariantType = variant_type || "none";
         const finalMetaTitle = meta_title || `${name} – ShopEasy`;
         const finalMetaDesc = meta_description || (description ? description.substring(0, 155) : `Buy ${name} at the best price on ShopEasy.`);
 
@@ -149,11 +151,11 @@ const updateproduct = async (req, res) => {
         const [result] = await db.query(
             `UPDATE newarrivals
              SET name = ?, price = ?, category = ?, image = ?, stock = ?,
-                 description = ?, sizes = ?, images = ?, slug = ?,
+                 description = ?, sizes = ?, variant_type = ?, images = ?, slug = ?,
                  meta_title = ?, meta_description = ?
              WHERE id = ?`,
             [name, price, category, image, stock,
-             description || null, sizes || null, imagesStr || null, slug,
+             description || null, sizes || null, finalVariantType, imagesStr || null, slug,
              finalMetaTitle, finalMetaDesc, id]
         );
 
@@ -169,11 +171,11 @@ const updateproduct = async (req, res) => {
             await db.query(
                 `UPDATE allproducts
                  SET name = ?, price = ?, category = ?, image = ?, stock = ?,
-                     description = ?, sizes = ?, images = ?, slug = ?,
+                     description = ?, sizes = ?, variant_type = ?, images = ?, slug = ?,
                      meta_title = ?, meta_description = ?
                  WHERE product_code = ?`,
                 [name, price, category, image, stock,
-                 description || null, sizes || null, imagesStr || null, slug,
+                 description || null, sizes || null, finalVariantType, imagesStr || null, slug,
                  finalMetaTitle, finalMetaDesc, prodCode]
             );
         }

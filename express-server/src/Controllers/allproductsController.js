@@ -94,13 +94,14 @@ const createProducts = async (req, res) => {
     try {
         const {
             name, price, category, image, stock,
-            description, sizes, images,
+            description, sizes, variant_type, images,
             meta_title, meta_description,
             targetType, isBoth
         } = req.body;
 
         const isBothSelected = targetType === "both" || isBoth === true;
         const slug = generateSlug(name);
+        const finalVariantType = variant_type || "none";
 
         // Check duplicate in allproducts
         const [allproducts] = await db.query(
@@ -145,12 +146,13 @@ const createProducts = async (req, res) => {
 
         const [result] = await db.query(
             `INSERT INTO allproducts
-             (name, price, category, image, stock, description, sizes, images, slug, meta_title, meta_description)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+             (name, price, category, image, stock, description, sizes, variant_type, images, slug, meta_title, meta_description)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 name, price, category, image, stock,
                 description || null,
                 sizes || null,
+                finalVariantType,
                 imagesStr || null,
                 slug,
                 finalMetaTitle,
@@ -184,20 +186,18 @@ const updateProducts = async (req, res) => {
         const { id } = req.params;
         const {
             name, price, category, image, stock,
-            description, sizes, images,
+            description, sizes, variant_type, images,
             meta_title, meta_description
         } = req.body;
 
-        // Fetch current product_code before update
         const [currProd] = await db.query(
             "SELECT product_code FROM allproducts WHERE id = ?",
             [id]
         );
 
         const slug = generateSlug(name);
-        const imagesStr = Array.isArray(images)
-            ? images.join(",")
-            : images || image || "";
+        const imagesStr = Array.isArray(images) ? images.join(",") : images || image || "";
+        const finalVariantType = variant_type || "none";
 
         const finalMetaTitle = meta_title || `${name} – ShopEasy`;
         const finalMetaDesc =
@@ -209,13 +209,14 @@ const updateProducts = async (req, res) => {
         const [result] = await db.query(
             `UPDATE allproducts
              SET name = ?, price = ?, category = ?, image = ?, stock = ?,
-                 description = ?, sizes = ?, images = ?, slug = ?,
+                 description = ?, sizes = ?, variant_type = ?, images = ?, slug = ?,
                  meta_title = ?, meta_description = ?
              WHERE id = ?`,
             [
                 name, price, category, image, stock,
                 description || null,
                 sizes || null,
+                finalVariantType,
                 imagesStr || null,
                 slug,
                 finalMetaTitle,
@@ -234,13 +235,14 @@ const updateProducts = async (req, res) => {
             await db.query(
                 `UPDATE newarrivals
                  SET name = ?, price = ?, category = ?, image = ?, stock = ?,
-                     description = ?, sizes = ?, images = ?, slug = ?,
+                     description = ?, sizes = ?, variant_type = ?, images = ?, slug = ?,
                      meta_title = ?, meta_description = ?
                  WHERE product_code = ?`,
                 [
                     name, price, category, image, stock,
                     description || null,
                     sizes || null,
+                    finalVariantType,
                     imagesStr || null,
                     slug,
                     finalMetaTitle,

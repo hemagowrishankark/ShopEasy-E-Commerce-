@@ -944,3 +944,46 @@
         display: none;
     }
 }
+
+/* ── Cart Variant Styling ───────────────────────────── */
+.cart-item-title-link {
+    color: #1e293b;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.cart-item-title-link:hover {
+    color: #4338ca;
+}
+
+.item-tags-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+    flex-wrap: wrap;
+}
+
+.item-variant-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #eef2ff;
+    color: #4338ca;
+    padding: 2px 9px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    border: 1px solid #c7d2fe;
+}
+
+.order-item-variant-tag {
+    display: inline-block;
+    background: #f0fdf4;
+    color: #15803d;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-top: 2px;
+}
+

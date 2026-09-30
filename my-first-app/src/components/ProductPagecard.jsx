@@ -8,10 +8,13 @@ function ProductPageCard({
     category,
     stock,
     slug,
+    sizes,
+    variant_type,
     onAddToCart
 }) {
     // Generate slug from name if not provided
     const productSlug = slug || name.toLowerCase().trim().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
+    const hasVariants = Boolean(sizes && sizes.trim().length > 0) || (variant_type && variant_type !== "none");
 
     const stockLabel = stock > 10
         ? null
@@ -24,7 +27,15 @@ function ProductPageCard({
             {/* Clickable image → product detail */}
             <Link to={`/product/${productSlug}`} className="product-image-link">
                 <div className="product-image">
-                    <img src={image} alt={name} loading="lazy" />
+                    <img 
+                        src={image} 
+                        alt={name} 
+                        loading="lazy" 
+                        onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = "https://placehold.co/300x300?text=Product";
+                        }}
+                    />
                     {stock < 1 && <div className="product-oos-overlay">Out of Stock</div>}
                 </div>
             </Link>
@@ -42,14 +53,25 @@ function ProductPageCard({
                 {stockLabel && <p className="product-page-stock">{stockLabel}</p>}
 
                 <div className="card-actions">
-                    <button
-                        className="addtocart"
-                        onClick={() => onAddToCart(productId)}
-                        disabled={stock < 1}
-                        title={stock < 1 ? "Out of stock" : "Add to cart"}
-                    >
-                        {stock < 1 ? "Unavailable" : "Add to Cart"}
-                    </button>
+                    {hasVariants ? (
+                        <Link
+                            to={`/product/${productSlug}`}
+                            className="addtocart"
+                            style={{ textAlign: "center", textDecoration: "none", display: "inline-block" }}
+                            title="View options to choose your variant"
+                        >
+                            Select Options
+                        </Link>
+                    ) : (
+                        <button
+                            className="addtocart"
+                            onClick={() => onAddToCart(productId)}
+                            disabled={stock < 1}
+                            title={stock < 1 ? "Out of stock" : "Add to cart"}
+                        >
+                            {stock < 1 ? "Unavailable" : "Add to Cart"}
+                        </button>
+                    )}
                     <Link to={`/product/${productSlug}`} className="view-details-btn">
                         View Details
                     </Link>

@@ -73,6 +73,7 @@ export const EMPTY_PRODUCT_FORM = {
     stock: "",
     description: "",
     sizes: "",
+    variant_type: "none",
     meta_title: "",
     meta_description: "",
     targetType: "allproducts"

@@ -30,9 +30,13 @@ const cartSchema = Joi.object({
         .messages({
             "any.only": "Invalid product type",
             "any.required": "Product type is required"
-        })
+        }),
 
-});
+    size: Joi.string().max(100).allow(null, "").optional(),
+    variant: Joi.string().max(100).allow(null, "").optional(),
+    selected_variant: Joi.string().max(100).allow(null, "").optional()
+
+}).unknown(true);
 
 module.exports = {
     cartSchema

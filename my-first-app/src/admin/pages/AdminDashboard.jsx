@@ -382,6 +382,7 @@ function AdminDashboard(props) {
                 isBoth: productForm.targetType === "both",
                 description: productForm.description?.trim() || null,
                 sizes: productForm.sizes || null,
+                variant_type: productForm.variant_type || "none",
                 images: productForm.images || null,
                 meta_title: productForm.meta_title?.trim() || null,
                 meta_description: productForm.meta_description?.trim() || null
@@ -508,6 +509,7 @@ function AdminDashboard(props) {
                 stock: parseInt(editingProduct.stock),
                 description: editingProduct.description?.trim() || null,
                 sizes: editingProduct.sizes || null,
+                variant_type: editingProduct.variant_type || "none",
                 images: editingProduct.images || null,
                 meta_title: editingProduct.meta_title?.trim() || null,
                 meta_description: editingProduct.meta_description?.trim() || null
@@ -971,6 +973,11 @@ const handleCancelOrder = async (orderId) => {
                                                                 itemsList.slice(0, 3).map((it, idx) => (
                                                                     <div key={idx} className="order-item-chip">
                                                                         <span>{it.product_name}</span>
+                                                                        {it.selected_variant && (
+                                                                            <span style={{ fontSize: "11px", color: "#6366f1", fontWeight: 700, background: "#eef2ff", padding: "1px 5px", borderRadius: "4px" }}>
+                                                                                {it.selected_variant}
+                                                                            </span>
+                                                                        )}
                                                                         <span className="qty-tag">×{it.quantity}</span>
                                                                     </div>
                                                                 ))
@@ -1086,7 +1093,9 @@ const handleCancelOrder = async (orderId) => {
                                                     <span className="label">Items:</span>
                                                     <div className="items-tags">
                                                         {(order.items || []).map((it, idx) => (
-                                                            <span key={idx} className="item-tag">{it.product_name} (×{it.quantity})</span>
+                                                            <span key={idx} className="item-tag">
+                                                                {it.product_name}{it.selected_variant ? ` [${it.selected_variant}]` : ""} (×{it.quantity})
+                                                            </span>
                                                         ))}
                                                     </div>
                                                 </div>

@@ -16,6 +16,7 @@ const createOrder = async (req, res) => {
                 cart.product_id,
                 cart.product_type,
                 cart.quantity,
+                cart.selected_variant,
 
                 CASE
                     WHEN cart.product_type = 'newarrival'
@@ -153,14 +154,15 @@ const createOrder = async (req, res) => {
         for (const item of cartItems) {
             await connection.query(
                 `INSERT INTO order_items
-                 (order_id, product_id, product_type, quantity, price)
-                 VALUES (?, ?, ?, ?, ?)`,
+                 (order_id, product_id, product_type, quantity, price, selected_variant)
+                 VALUES (?, ?, ?, ?, ?, ?)`,
                 [
                     orderId,
                     item.product_id,
                     item.product_type,
                     item.quantity,
-                    item.price
+                    item.price,
+                    item.selected_variant || null
                 ]
             );
         }
@@ -226,6 +228,7 @@ const getMyOrders = async (req, res) => {
                 oi.product_type,
                 oi.quantity,
                 oi.price,
+                oi.selected_variant,
                 CASE
                     WHEN oi.product_type = 'newarrival' THEN na.name
                     WHEN oi.product_type = 'allproduct' THEN ap.name
@@ -302,6 +305,7 @@ const getOrders = async (req, res) => {
                 oi.product_type,
                 oi.quantity,
                 oi.price,
+                oi.selected_variant,
                 CASE
                     WHEN oi.product_type = 'newarrival' THEN na.name
                     WHEN oi.product_type = 'allproduct' THEN ap.name

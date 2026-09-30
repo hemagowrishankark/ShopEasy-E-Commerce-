@@ -317,10 +317,25 @@ function Cart() {
 
                                             <div className="item-details-wrap">
                                                 <div className="item-main-info">
-                                                    <h4 className="item-name">{item.name}</h4>
-                                                    {item.category && (
-                                                        <span className="item-category-tag">🏷️ {item.category}</span>
-                                                    )}
+                                                    <h4 className="item-name">
+                                                        {item.slug ? (
+                                                            <Link to={`/product/${item.slug}`} className="cart-item-title-link">
+                                                                {item.name}
+                                                            </Link>
+                                                        ) : (
+                                                            item.name
+                                                        )}
+                                                    </h4>
+                                                    <div className="item-tags-row">
+                                                        {item.category && (
+                                                            <span className="item-category-tag">🏷️ {item.category}</span>
+                                                        )}
+                                                        {item.selected_variant && (
+                                                            <span className="item-variant-tag">
+                                                                ✨ {item.selected_variant}
+                                                            </span>
+                                                        )}
+                                                    </div>
                                                 </div>
 
                                                 <div className="item-pricing-row">
@@ -495,6 +510,9 @@ function Cart() {
                                                         </div>
                                                         <div className="order-item-info">
                                                             <span className="order-item-title">{item.product_name}</span>
+                                                            {item.selected_variant && (
+                                                                <span className="order-item-variant-tag">✨ {item.selected_variant}</span>
+                                                            )}
                                                             <span className="order-item-qty">Quantity: {item.quantity}</span>
                                                         </div>
                                                         <div className="order-item-amount">

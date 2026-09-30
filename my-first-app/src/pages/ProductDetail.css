@@ -179,15 +179,21 @@
     white-space: pre-wrap;
 }
 
-/* ── Size Variants ─────────────────────────────────── */
+/* ── Product Variants ──────────────────────────────── */
 .pd-variants {
-    border: #111827 ;
+    margin-bottom: 20px;
 }
 .pd-variant-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     margin: 0 0 12px;
     font-size: 15px;
     font-weight: 700;
     color: #1f2937;
+}
+.pd-variant-type-icon {
+    font-size: 18px;
 }
 .pd-selected-size {
     color: #4338ca;
@@ -400,4 +406,10 @@
     .pd-name { font-size: 20px; }
     .pd-price { font-size: 24px; }
     .pd-size-btn { min-width: 44px; padding: 8px 12px; }
+}
+
+/* Variant type icon beside label */
+.pd-variant-type-icon {
+    font-size: 18px;
+    margin-right: 6px;
 }

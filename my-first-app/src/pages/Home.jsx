@@ -217,6 +217,9 @@ const navigate = useNavigate();
                         price={product.price}
                         image={`http://localhost:5001/assets/${product.image}`}
                         stock={product.stock}
+                        slug={product.slug}
+                        sizes={product.sizes}
+                        variant_type={product.variant_type}
                         onAddToCart={handleAddToCart}
                     />
                 ))}

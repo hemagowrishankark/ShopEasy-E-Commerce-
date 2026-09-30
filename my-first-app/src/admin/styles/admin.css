@@ -3184,3 +3184,125 @@ input:checked + .admin-slider:before {
     .size-chip { min-width: 40px; padding: 7px 10px; font-size: 12px; }
     .uploaded-img-item { width: 64px; height: 64px; }
 }
+
+/* ---------------------------------------------------
+   VARIANT TYPE SELECTOR (Category-Aware System)
+   --------------------------------------------------- */
+
+.variant-section-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 12px;
+}
+.variant-auto-badge {
+    font-size: 11px;
+    font-weight: 600;
+    color: #4338ca;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 20px;
+    padding: 3px 10px;
+}
+.variant-type-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+.variant-type-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 10px 14px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 68px;
+}
+.variant-type-btn:hover {
+    border-color: #4338ca;
+    background: #f5f3ff;
+    transform: translateY(-2px);
+}
+.variant-type-active {
+    background: linear-gradient(135deg, #4338ca, #7c3aed) !important;
+    border-color: #4338ca !important;
+    color: white;
+    box-shadow: 0 4px 12px rgba(67,56,202,0.3);
+}
+.variant-type-active .vt-label { color: white !important; }
+.vt-icon { font-size: 20px; line-height: 1; }
+.vt-label { font-size: 11px; font-weight: 600; color: #374151; white-space: nowrap; }
+.variant-chips-section { margin-top: 4px; }
+.variant-chips-hint { font-size: 12px; color: #6b7280; margin: 0 0 8px; font-weight: 500; }
+.custom-variant-input-row { display: flex; gap: 8px; margin-top: 10px; align-items: center; }
+.custom-variant-input {
+    flex: 1;
+    padding: 9px 12px;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.custom-variant-input:focus { border-color: #4338ca; }
+.custom-variant-add-btn {
+    padding: 9px 16px;
+    background: #4338ca;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+.custom-variant-add-btn:hover { background: #312e81; }
+.selected-variants-preview {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    padding: 10px 14px;
+    background: #f0f4ff;
+    border-radius: 10px;
+    border: 1px solid #c7d2fe;
+}
+.selected-variants-label { font-size: 12px; font-weight: 700; color: #4338ca; margin-right: 4px; }
+.selected-variant-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #4338ca;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+.remove-variant-tag-btn {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.8);
+    cursor: pointer;
+    font-size: 11px;
+    padding: 0;
+    line-height: 1;
+}
+.remove-variant-tag-btn:hover { color: white; }
+@media (max-width: 768px) {
+    .variant-type-btn { min-width: 56px; padding: 8px 10px; }
+    .vt-icon { font-size: 17px; }
+    .vt-label { font-size: 10px; }
+}
