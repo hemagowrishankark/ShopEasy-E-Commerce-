@@ -109,6 +109,8 @@ function ProductEditModal({
                     </p>
                 )}
 
+                <div className="form-grid">
+
                 {/* Name */}
                 <div className="form-group">
                     <label>Product Name</label>
@@ -319,6 +321,8 @@ function ProductEditModal({
                         placeholder="Brief description for search engines…"
                     />
                     <small className="field-character-count">{safeStr(editingProduct.meta_description).length}/160</small>
+                </div>
+
                 </div>
 
                 <div className="form-buttons">

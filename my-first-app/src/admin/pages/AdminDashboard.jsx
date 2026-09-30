@@ -809,6 +809,8 @@ const handleCancelOrder = async (orderId) => {
                 />
 
                 {/* Navigation Tabs */}
+                {!showForm && (
+                <>
                 <div className="admin-tabs">
                      <button
                         className={`tab-btn category-tab-btn ${activeTab === "categories" ? "active" : ""}`}
@@ -1427,26 +1429,6 @@ const handleCancelOrder = async (orderId) => {
                             {/* "All Categories" Summary Card */}
                             <div 
                                 className={`category-summary-card ${selectedCategory === null && showCategoryProducts ? "selected" : ""}`}
-                                onClick={() => {
-                                    if (selectedCategory === null && showCategoryProducts) {
-                                        setShowCategoryProducts(false);
-                                    } else {
-                                        setSelectedCategory(null);
-                                        setShowCategoryProducts(true);
-                                        setTimeout(() => {
-                                            const el = document.getElementById("category-products-section");
-                                            if (el) el.scrollIntoView({ behavior: "smooth" });
-                                        }, 80);
-                                    }
-                                }}
-                                role="button"
-                                tabIndex={0}
-                                onKeyDown={(e) => {
-                                    if (e.key === 'Enter') {
-                                        setSelectedCategory(null);
-                                        setShowCategoryProducts(true);
-                                    }
-                                }}
                             >
                                 <div className="cat-card-icon-wrap all-cat-icon">
                                     📁
@@ -1467,7 +1449,6 @@ const handleCancelOrder = async (orderId) => {
                                         type="button"
                                         className="view-cat-products-btn"
                                         onClick={(e) => {
-                                            e.stopPropagation();
                                             if (selectedCategory === null && showCategoryProducts) {
                                                 setShowCategoryProducts(false);
                                             } else {
@@ -1496,26 +1477,6 @@ const handleCancelOrder = async (orderId) => {
                                     <div
                                         key={cat.id || cat.name}
                                         className={`category-summary-card ${isCardActive ? "selected" : ""}`}
-                                        onClick={() => {
-                                            if (isCardActive) {
-                                                setShowCategoryProducts(false);
-                                            } else {
-                                                setSelectedCategory(cat.name);
-                                                setShowCategoryProducts(true);
-                                                setTimeout(() => {
-                                                    const el = document.getElementById("category-products-section");
-                                                    if (el) el.scrollIntoView({ behavior: "smooth" });
-                                                }, 80);
-                                            }
-                                        }}
-                                        role="button"
-                                        tabIndex={0}
-                                        onKeyDown={(e) => {
-                                            if (e.key === 'Enter') {
-                                                setSelectedCategory(cat.name);
-                                                setShowCategoryProducts(true);
-                                            }
-                                        }}
                                     >
                                         <div className="cat-card-header">
                                             {cat.image ? (
@@ -1564,7 +1525,6 @@ const handleCancelOrder = async (orderId) => {
                                                 type="button"
                                                 className="view-cat-products-btn"
                                                 onClick={(e) => {
-                                                    e.stopPropagation();
                                                     if (isCardActive) {
                                                         setShowCategoryProducts(false);
                                                     } else {
@@ -1821,6 +1781,8 @@ const handleCancelOrder = async (orderId) => {
                             </table>
                         </div>
                     </div>
+                )}
+                </>
                 )}
             </section>
         </>
